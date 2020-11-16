@@ -11,6 +11,7 @@
 		88FC66012562C2BC00204FF2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FC66002562C2BC00204FF2 /* ContentView.swift */; };
 		88FC66032562C2C000204FF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88FC66022562C2C000204FF2 /* Assets.xcassets */; };
 		88FC66062562C2C000204FF2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88FC66052562C2C000204FF2 /* Preview Assets.xcassets */; };
+		88FC660F2562D17200204FF2 /* DisplayListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FC660E2562D17200204FF2 /* DisplayListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		88FC66022562C2C000204FF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88FC66052562C2C000204FF2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		88FC66072562C2C000204FF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88FC660E2562D17200204FF2 /* DisplayListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			children = (
 				88FC65FE2562C2BC00204FF2 /* PDF417App.swift */,
 				88FC66002562C2BC00204FF2 /* ContentView.swift */,
+				88FC660E2562D17200204FF2 /* DisplayListView.swift */,
 				88FC66022562C2C000204FF2 /* Assets.xcassets */,
 				88FC66072562C2C000204FF2 /* Info.plist */,
 				88FC66042562C2C000204FF2 /* Preview Content */,
@@ -140,6 +143,7 @@
 			files = (
 				88FC66012562C2BC00204FF2 /* ContentView.swift in Sources */,
 				88FC65FF2562C2BC00204FF2 /* PDF417App.swift in Sources */,
+				88FC660F2562D17200204FF2 /* DisplayListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
