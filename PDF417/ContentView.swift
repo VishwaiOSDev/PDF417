@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
+    var displayList = DisplayLists()
     
     var body: some View {
         TabView{
@@ -28,7 +29,7 @@ struct ContentView: View {
                     Image(systemName: "camera.fill")
                     Text("Camera")
                 }
-        }
+        }.environmentObject(displayList)
     }
 }
 
