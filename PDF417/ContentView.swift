@@ -24,11 +24,6 @@ struct ContentView: View {
                     Image(systemName: "mail.stack")
                     Text("Mail Items")
                 }
-            Text("QRCode Scanner")
-                .tabItem {
-                    Image(systemName: "camera.fill")
-                    Text("Camera")
-                }
         }.environmentObject(displayList)
     }
 }

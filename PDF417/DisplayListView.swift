@@ -34,7 +34,7 @@ struct DisplayListView: View {
         case .box:
             return displayLists.people.filter { $0.isContacted }
         case .mail:
-            return displayLists.people.filter {!$0.isContacted}
+            return displayLists.people.filter { !$0.isContacted }
         }
     }
     
@@ -79,7 +79,7 @@ struct DisplayListView: View {
             let details = code.components(separatedBy: "|")
             
             let avnString = String(details[5].dropFirst(4))
-            let cityString = String(details[7].dropFirst(4))
+            let cityString = String(details[8].dropFirst(4))
             
             
             let data = DisplayList()
