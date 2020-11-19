@@ -16,6 +16,7 @@ class DisplayList : Identifiable , Codable{
 
 
 class DisplayLists : ObservableObject{
+    
     @Published var people : [DisplayList]
     
     init() {

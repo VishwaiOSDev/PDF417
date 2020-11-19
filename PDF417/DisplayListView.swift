@@ -14,9 +14,15 @@ struct DisplayListView: View {
         case box , mail
     }
     
+    let pasteBoard = UIPasteboard.general
+    
+    @State var copyToClipBoard : [String] = []
+    
     @EnvironmentObject var displayLists : DisplayLists
     
     @State private var isShowingScanner = false
+    
+    @State var copyVariable : String = " "
     
     let filter : FilterType
     
@@ -46,24 +52,40 @@ struct DisplayListView: View {
                     VStack(alignment : .leading){
                         Text(displaylist.name)
                             .font(.headline)
-                            .onTapGesture(count: 1) {
-                                UIPasteboard.general.string = "\(displaylist.name) \(displaylist.email)"
-                                }
                         Text(displaylist.email)
                             .foregroundColor(.secondary)
                     }
                 }
             }
             .navigationBarTitle(title)
-            .navigationBarItems(trailing: Button(action: {
-                self.isShowingScanner = true
-            }) {
-                Image(systemName: "qrcode.viewfinder")
-                Text("Scan")
+            .navigationBarItems(trailing: HStack{
+                
+                Button(action: {
+                    
+                    for items in displayLists.people{
+                        let elements = "\(items.name) \(items.email)\n"
+                        copyToClipBoard.append(elements)
+                    }
+                    
+                    pasteBoard.strings = copyToClipBoard
+                    
+                }){
+                    Text("Copy")
+                }
+                Button(action: {
+                    self.isShowingScanner = true
+                }) {
+                    Image(systemName: "qrcode.viewfinder")
+                }
+                
+                
             })
+            
             .sheet(isPresented : $isShowingScanner){
                 CodeScannerView(codeTypes: [.pdf417], simulatedData: "Vishwa|Appleismass|GoogleisWorst|Apple" , completion: self.handleScan)
             }
+            
+            
             
         }
         
@@ -86,6 +108,7 @@ struct DisplayListView: View {
             data.name = avnString
             data.email = cityString
             self.displayLists.people.append(data)
+            
             
             
         case .failure(let error):
