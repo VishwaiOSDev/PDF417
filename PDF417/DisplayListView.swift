@@ -44,18 +44,47 @@ struct DisplayListView: View {
         }
     }
     
+    func delete(at offsets: IndexSet) {
+        copyToClipBoard.remove(atOffsets: offsets)
+        displayLists.people.remove(atOffsets: offsets)
+    }
+    
     var body: some View {
         NavigationView{
             
+            
             List{
                 ForEach(filterDisplayLists){ displaylist in
+                    
                     VStack(alignment : .leading){
+                        
                         Text(displaylist.name)
                             .font(.headline)
+                        
+                        
                         Text(displaylist.email)
+                            .font(.subheadline)
                             .foregroundColor(.secondary)
+                        
+                        
+                    }
+                    .contextMenu{
+                        Button(action: {
+                            if let index = self.copyToClipBoard.firstIndex(of: displaylist.email) {
+                                self.copyToClipBoard.remove(at: index)
+                            }
+                        }, label: {
+                            HStack {
+                                Text("Delete")
+                                Spacer()
+                                Image(systemName: "trash")
+                            }
+                        })
                     }
                 }
+                .onDelete(perform: delete)
+                .listStyle(PlainListStyle())
+                
             }
             .navigationBarTitle(title)
             .navigationBarItems(trailing: HStack{
@@ -70,24 +99,25 @@ struct DisplayListView: View {
                     pasteBoard.strings = copyToClipBoard
                     
                 }){
-                    Text("Copy")
+                    Image(systemName: "book.fill")
                 }
                 Button(action: {
                     self.isShowingScanner = true
                 }) {
                     Image(systemName: "qrcode.viewfinder")
+                    Text("Scan")
                 }
                 
                 
             })
             
+            
             .sheet(isPresented : $isShowingScanner){
                 CodeScannerView(codeTypes: [.pdf417], simulatedData: "Vishwa|Appleismass|GoogleisWorst|Apple" , completion: self.handleScan)
             }
-            
-            
-            
+
         }
+        
         
         
     }
