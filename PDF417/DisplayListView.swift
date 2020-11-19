@@ -11,12 +11,14 @@ import CodeScanner
 struct DisplayListView: View {
     
     enum FilterType {
-        case box , mail
+        case box
     }
     
     let pasteBoard = UIPasteboard.general
     
     @State var copyToClipBoard : [String] = []
+    
+    @State private var showingAlert = false
     
     @EnvironmentObject var displayLists : DisplayLists
     
@@ -24,14 +26,14 @@ struct DisplayListView: View {
     
     @State var copyVariable : String = " "
     
+    @State private var isToggle = false
+    
     let filter : FilterType
     
     var title : String {
         switch filter{
         case .box:
-            return "Box"
-        case .mail:
-            return  "Mail"
+            return "Items"
         }
     }
     
@@ -39,8 +41,7 @@ struct DisplayListView: View {
         switch filter{
         case .box:
             return displayLists.people.filter { $0.isContacted }
-        case .mail:
-            return displayLists.people.filter { !$0.isContacted }
+            
         }
     }
     
@@ -52,74 +53,83 @@ struct DisplayListView: View {
     var body: some View {
         NavigationView{
             
-            
-            List{
-                ForEach(filterDisplayLists){ displaylist in
+            VStack{
+                
+                List{
+                    ForEach(filterDisplayLists){ displaylist in
+                        
+                        VStack(alignment : .leading){
+                            
+                            Text( isToggle ? "\(displaylist.name) - (M)" : "\(displaylist.name) - (B)")
+                                .font(.headline)
+                            
+                            
+                            Text(displaylist.email)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            
+                            
+                        }
+                    }
+                    .onDelete(perform: delete)
+                    .listStyle(PlainListStyle())
                     
-                    VStack(alignment : .leading){
-                        
-                        Text(displaylist.name)
-                            .font(.headline)
-                        
-                        
-                        Text(displaylist.email)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        
-                        
-                    }
-                    .contextMenu{
-                        Button(action: {
-                            if let index = self.copyToClipBoard.firstIndex(of: displaylist.email) {
-                                self.copyToClipBoard.remove(at: index)
-                            }
-                        }, label: {
-                            HStack {
-                                Text("Delete")
-                                Spacer()
-                                Image(systemName: "trash")
-                            }
-                        })
-                    }
                 }
-                .onDelete(perform: delete)
-                .listStyle(PlainListStyle())
+                .navigationBarTitle(title)
+                .navigationBarItems(trailing:
+                                        
+                                        Button(action: {
+                                            self.isShowingScanner = true
+                                        }) {
+                                            Image(systemName: "qrcode.viewfinder")
+                                            Text("Scan")
+                                        }
+                                    
+                                    
+                )
                 
-            }
-            .navigationBarTitle(title)
-            .navigationBarItems(trailing: HStack{
                 
-                Button(action: {
-                    
-                    for items in displayLists.people{
-                        let elements = "\(items.name) \(items.email)\n"
-                        copyToClipBoard.append(elements)
-                    }
-                    
-                    pasteBoard.strings = copyToClipBoard
-                    
+                .sheet(isPresented : $isShowingScanner){
+                    CodeScannerView(codeTypes: [.pdf417], simulatedData: "Vishwa|Appleismass|GoogleisWorst|Apple" , completion: self.handleScan)
+                }
+                
+                Button(action:{
+                    copyClips()
+                    self.showingAlert = true
                 }){
-                    Image(systemName: "book.fill")
-                }
-                Button(action: {
-                    self.isShowingScanner = true
-                }) {
-                    Image(systemName: "qrcode.viewfinder")
-                    Text("Scan")
+                    Image(systemName: "doc.on.clipboard")
+                    Text("Copy")
+                    
+                    
+                }.alert(isPresented:$showingAlert) {
+                    Alert(title: Text("Copied"), message: Text("List of items has been copied successfully."), dismissButton: .default(Text("Ok")))
                 }
                 
                 
-            })
-            
-            
-            .sheet(isPresented : $isShowingScanner){
-                CodeScannerView(codeTypes: [.pdf417], simulatedData: "Vishwa|Appleismass|GoogleisWorst|Apple" , completion: self.handleScan)
+                
+                Toggle(isOn: $isToggle){
+                    Image(systemName: "mail.stack.fill")
+                        .foregroundColor(.blue)
+                    Text("Mail")
+                        .foregroundColor(.blue)
+                }.padding(.all)
+                .toggleStyle(SwitchToggleStyle(tint: .blue))
+                
             }
-
         }
         
+    }
+    
+    func copyClips(){
+        copyToClipBoard.removeAll()
         
+        for items in displayLists.people{
+            let elements = isToggle ? "\(items.name) \(items.email) - (M)\n" : "\(items.name) \(items.email) - (B)\n"
+            copyToClipBoard.append(elements)
+        }
         
+        print(copyToClipBoard)
+        pasteBoard.strings = copyToClipBoard
     }
     
     func handleScan(result : Result<String , CodeScannerView.ScanError>){

@@ -13,16 +13,10 @@ struct ContentView: View {
     
     var body: some View {
         TabView{
-            
             DisplayListView(filter: .box)
                 .tabItem {
-                    Image(systemName: "shippingbox.fill")
-                    Text("Box")
-                }
-            DisplayListView(filter: .mail)
-                .tabItem {
-                    Image(systemName: "mail.stack")
-                    Text("Mail Items")
+                    Image(systemName: "list.bullet")
+                    Text("Items")
                 }
         }.environmentObject(displayList)
     }
