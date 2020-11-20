@@ -12,13 +12,8 @@ struct ContentView: View {
     var displayList = DisplayLists()
     
     var body: some View {
-        TabView{
-            DisplayListView(filter: .box)
-                .tabItem {
-                    Image(systemName: "list.bullet")
-                    Text("Items")
-                }
-        }.environmentObject(displayList)
+        DisplayListView(filter: .box)
+            .environmentObject(displayList)
     }
 }
 

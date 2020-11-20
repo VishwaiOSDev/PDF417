@@ -56,18 +56,18 @@ struct DisplayListView: View {
             VStack{
                 
                 List{
-                    ForEach(filterDisplayLists){ displaylist in
+                    ForEach(filterDisplayLists.reversed()){ displaylist in
                         
                         VStack(alignment : .leading){
                             
                             Text( isToggle ? "\(displaylist.name) - (M)" : "\(displaylist.name) - (B)")
                                 .font(.headline)
+                                
                             
                             
                             Text(displaylist.email)
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
-                            
                             
                         }
                     }
@@ -79,13 +79,14 @@ struct DisplayListView: View {
                 .navigationBarItems(trailing:
                                         
                                         Button(action: {
-                                            self.isShowingScanner = true
+                                            copyClips()
+                                            self.showingAlert = true
                                         }) {
-                                            Image(systemName: "qrcode.viewfinder")
-                                            Text("Scan")
+                                            Image(systemName: "doc.on.clipboard")
+                                            Text("Copy")
+                                        }.alert(isPresented:$showingAlert) {
+                                            Alert(title: Text("Copied"), message: Text("List of items has been copied successfully."), dismissButton: .default(Text("Ok")))
                                         }
-                                    
-                                    
                 )
                 
                 
@@ -93,27 +94,20 @@ struct DisplayListView: View {
                     CodeScannerView(codeTypes: [.pdf417], simulatedData: "Vishwa|Appleismass|GoogleisWorst|Apple" , completion: self.handleScan)
                 }
                 
-                Button(action:{
-                    copyClips()
-                    self.showingAlert = true
-                }){
-                    Image(systemName: "doc.on.clipboard")
-                    Text("Copy")
-                    
-                    
-                }.alert(isPresented:$showingAlert) {
-                    Alert(title: Text("Copied"), message: Text("List of items has been copied successfully."), dismissButton: .default(Text("Ok")))
-                }
-                
-                
                 
                 Toggle(isOn: $isToggle){
                     Image(systemName: "mail.stack.fill")
                         .foregroundColor(.blue)
                     Text("Mail")
                         .foregroundColor(.blue)
-                }.padding(.all)
+                }.padding([.top,.leading,.trailing])
                 .toggleStyle(SwitchToggleStyle(tint: .blue))
+                
+                LargeButton(title: "Scan",
+                            image: "qrcode.viewfinder",
+                            backgroundColor: Color.blue) {
+                    self.isShowingScanner = true
+                }
                 
             }
         }
@@ -164,6 +158,7 @@ struct DisplayListView: View {
 
 struct DisplayListView_Previews: PreviewProvider {
     static var previews: some View {
-        DisplayListView(filter: .box)
+        DisplayListView(filter: .box).environmentObject(DisplayLists())
+            .preferredColorScheme(.dark)
     }
 }

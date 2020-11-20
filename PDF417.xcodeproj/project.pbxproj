@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		889F37A02567CE2C0068F86C /* LargeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889F379F2567CE2C0068F86C /* LargeButton.swift */; };
 		88D8E9FF2563DF8C009F93CD /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 88D8E9FE2563DF8C009F93CD /* CodeScanner */; };
 		88FC65FF2562C2BC00204FF2 /* PDF417App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FC65FE2562C2BC00204FF2 /* PDF417App.swift */; };
 		88FC66012562C2BC00204FF2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FC66002562C2BC00204FF2 /* ContentView.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		889F379F2567CE2C0068F86C /* LargeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButton.swift; sourceTree = "<group>"; };
 		88FC65FB2562C2BC00204FF2 /* PDF417.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDF417.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88FC65FE2562C2BC00204FF2 /* PDF417App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDF417App.swift; sourceTree = "<group>"; };
 		88FC66002562C2BC00204FF2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				88FC66002562C2BC00204FF2 /* ContentView.swift */,
 				88FC66112562D36E00204FF2 /* DisplayList.swift */,
 				88FC660E2562D17200204FF2 /* DisplayListView.swift */,
+				889F379F2567CE2C0068F86C /* LargeButton.swift */,
 				88FC66022562C2C000204FF2 /* Assets.xcassets */,
 				88FC66072562C2C000204FF2 /* Info.plist */,
 				88FC66042562C2C000204FF2 /* Preview Content */,
@@ -153,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88FC66012562C2BC00204FF2 /* ContentView.swift in Sources */,
+				889F37A02567CE2C0068F86C /* LargeButton.swift in Sources */,
 				88FC65FF2562C2BC00204FF2 /* PDF417App.swift in Sources */,
 				88FC66122562D36E00204FF2 /* DisplayList.swift in Sources */,
 				88FC660F2562D17200204FF2 /* DisplayListView.swift in Sources */,
