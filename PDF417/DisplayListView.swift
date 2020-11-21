@@ -8,13 +8,24 @@
 import SwiftUI
 import CodeScanner
 
+enum ActiveSheet  {
+    case first, second
+}
+
 struct DisplayListView: View {
     
     enum FilterType {
         case box
     }
     
+    @State private var activeSheet: ActiveSheet?
+    
+    @State private var showSheet = false
+    
     let pasteBoard = UIPasteboard.general
+    
+    @State private var textStreet : String = ""
+    @State private var textPostalCode : String = ""
     
     @State var copyToClipBoard : [String] = []
     
@@ -22,7 +33,7 @@ struct DisplayListView: View {
     
     @EnvironmentObject var displayLists : DisplayLists
     
-    @State private var isShowingScanner = false
+    @State private var isShowingManualAddress = false
     
     @State var copyVariable : String = " "
     
@@ -56,45 +67,59 @@ struct DisplayListView: View {
             VStack{
                 
                 List{
-                    ForEach(filterDisplayLists.reversed()){ displaylist in
+                    ForEach(filterDisplayLists){ displaylist in
                         
                         VStack(alignment : .leading){
                             
-                            Text( isToggle ? "\(displaylist.name) - (M)" : "\(displaylist.name) - (B)")
+                            Text( isToggle ? "\(displaylist.street) - (M)" : "\(displaylist.street) - (B)")
                                 .font(.headline)
-                                
                             
-                            
-                            Text(displaylist.email)
+                            Text(displaylist.postalCode)
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             
                         }
+                        
                     }
-                    .onDelete(perform: delete)
+                    .onDelete(perform : delete)
                     .listStyle(PlainListStyle())
                     
                 }
                 .navigationBarTitle(title)
                 .navigationBarItems(trailing:
-                                        
-                                        Button(action: {
-                                            copyClips()
-                                            self.showingAlert = true
-                                        }) {
-                                            Image(systemName: "doc.on.clipboard")
-                                            Text("Copy")
-                                        }.alert(isPresented:$showingAlert) {
-                                            Alert(title: Text("Copied"), message: Text("List of items has been copied successfully."), dismissButton: .default(Text("Ok")))
+                                        HStack {
+                                            
+                                            //MARK: - Copy Button
+                                            Button(action: {
+                                                copyClips()
+                                                self.showingAlert = true
+                                            }) {
+                                                Text("Copy")
+                                            }.alert(isPresented:$showingAlert) {
+                                                Alert(title: Text("Copied"), message: Text("List of items has been copied successfully."), dismissButton: .default(Text("Ok")))
+                                            }
+                                            
+                                            //MARK: - New item Button
+                                            Button(action : {
+                                                self.showSheet = true
+                                                
+                                                activeSheet = .second
+                                                
+                                                
+                                            }){
+                                                Image(systemName: "plus")
+                                            }
+                                            
                                         }
-                )
-                
-                
-                .sheet(isPresented : $isShowingScanner){
-                    CodeScannerView(codeTypes: [.pdf417], simulatedData: "Vishwa|Appleismass|GoogleisWorst|Apple" , completion: self.handleScan)
+                ).sheet(isPresented : $showSheet) {
+                    if self.activeSheet == .first{
+                        CodeScannerView(codeTypes: [.pdf417], simulatedData: "Vishwa|Appleismass|GoogleisWorst|Apple" , completion: self.handleScan)
+                    }
+                    if self.activeSheet == .second{
+                        ManualAddressView(showModal: $showSheet, addressFieldStreet : $textStreet, addressFieldPostalCode : $textPostalCode)                    }
                 }
                 
-                
+                //MARK: - Mail Toggle Button
                 Toggle(isOn: $isToggle){
                     Image(systemName: "mail.stack.fill")
                         .foregroundColor(.blue)
@@ -103,10 +128,13 @@ struct DisplayListView: View {
                 }.padding([.top,.leading,.trailing])
                 .toggleStyle(SwitchToggleStyle(tint: .blue))
                 
+                //MARK: - Scan Button
                 LargeButton(title: "Scan",
                             image: "qrcode.viewfinder",
                             backgroundColor: Color.blue) {
-                    self.isShowingScanner = true
+                    self.showSheet = true
+
+                    activeSheet = .first
                 }
                 
             }
@@ -114,11 +142,13 @@ struct DisplayListView: View {
         
     }
     
+    
+    //MARK: - Copy Function
     func copyClips(){
         copyToClipBoard.removeAll()
         
         for items in displayLists.people{
-            let elements = isToggle ? "\(items.name) \(items.email) - (M)\n" : "\(items.name) \(items.email) - (B)\n"
+            let elements = isToggle ? "\(items.street) \(items.postalCode) - (M)\n" : "\(items.street) \(items.postalCode) - (B)\n"
             copyToClipBoard.append(elements)
         }
         
@@ -126,9 +156,10 @@ struct DisplayListView: View {
         pasteBoard.strings = copyToClipBoard
     }
     
+    
+    //MARK: - QRCode Scanner
     func handleScan(result : Result<String , CodeScannerView.ScanError>){
-        self.isShowingScanner = false
-        
+        self.showSheet = false
         switch result {
         case .success(let code):
             
@@ -139,18 +170,14 @@ struct DisplayListView: View {
             
             
             let data = DisplayList()
-            data.name = avnString
-            data.email = cityString
+            data.street = avnString
+            data.postalCode = cityString
             self.displayLists.people.append(data)
-            
-            
             
         case .failure(let error):
             print("Failed \(error)")
             
         }
-        
-        
         
     }
     

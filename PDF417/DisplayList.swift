@@ -9,8 +9,8 @@ import SwiftUI
 
 class DisplayList : Identifiable , Codable{
     var id = UUID()
-    var name = "Apple"
-    var email = ""
+    var street = "Apple"
+    var postalCode = ""
     var isContacted = true
 }
 
