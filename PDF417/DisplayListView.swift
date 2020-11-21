@@ -8,8 +8,13 @@
 import SwiftUI
 import CodeScanner
 
-enum ActiveSheet  {
+enum ActiveSheet : Identifiable  {
     case first, second
+    
+    var id: Int {
+        hashValue
+    }
+    
 }
 
 struct DisplayListView: View {
@@ -18,10 +23,8 @@ struct DisplayListView: View {
         case box
     }
     
-    @State private var activeSheet: ActiveSheet?
-    
-    @State private var showSheet = false
-    
+    @State var activeSheet: ActiveSheet?
+        
     let pasteBoard = UIPasteboard.general
     
     @State private var textStreet : String = ""
@@ -101,23 +104,28 @@ struct DisplayListView: View {
                                             
                                             //MARK: - New item Button
                                             Button(action : {
-                                                self.showSheet = true
-                                                
                                                 activeSheet = .second
-                                                
-                                                
                                             }){
                                                 Image(systemName: "plus")
                                             }
                                             
                                         }
-                ).sheet(isPresented : $showSheet) {
-                    if self.activeSheet == .first{
+                )
+                .sheet(item : $activeSheet){ item in
+                    switch item {
+                    case .first:
                         CodeScannerView(codeTypes: [.pdf417], simulatedData: "Vishwa|Appleismass|GoogleisWorst|Apple" , completion: self.handleScan)
+                    case .second:
+                        ManualAddressView(showModal: $activeSheet, addressFieldStreet : $textStreet, addressFieldPostalCode : $textPostalCode)
                     }
-                    if self.activeSheet == .second{
-                        ManualAddressView(showModal: $showSheet, addressFieldStreet : $textStreet, addressFieldPostalCode : $textPostalCode)                    }
                 }
+                //                .sheet(isPresented : $showSheet) {
+                //                    if self.activeSheet == .first{
+                //                        CodeScannerView(codeTypes: [.pdf417], simulatedData: "Vishwa|Appleismass|GoogleisWorst|Apple" , completion: self.handleScan)
+                //                    }
+                //                    if self.activeSheet == .second{
+                //                        ManualAddressView(showModal: $showSheet, addressFieldStreet : $textStreet, addressFieldPostalCode : $textPostalCode)                    }
+                //                }
                 
                 //MARK: - Mail Toggle Button
                 Toggle(isOn: $isToggle){
@@ -132,8 +140,6 @@ struct DisplayListView: View {
                 LargeButton(title: "Scan",
                             image: "qrcode.viewfinder",
                             backgroundColor: Color.blue) {
-                    self.showSheet = true
-
                     activeSheet = .first
                 }
                 
@@ -159,7 +165,7 @@ struct DisplayListView: View {
     
     //MARK: - QRCode Scanner
     func handleScan(result : Result<String , CodeScannerView.ScanError>){
-        self.showSheet = false
+        activeSheet = nil
         switch result {
         case .success(let code):
             

@@ -11,7 +11,7 @@ struct ManualAddressView: View {
     
     @EnvironmentObject var displayLists : DisplayLists
     
-    @Binding var showModal: Bool
+    @Binding var showModal : ActiveSheet?
     
     @Binding var addressFieldStreet : String
     @Binding var addressFieldPostalCode : String
@@ -62,7 +62,7 @@ struct ManualAddressView: View {
                         
                         self.displayLists.people.append(data)
                         
-                        self.showModal.toggle()
+                        self.showModal = nil
                         
                     }
  
@@ -74,8 +74,8 @@ struct ManualAddressView: View {
     }
 }
 
-struct ManualAddressView_Previews: PreviewProvider {
-    static var previews: some View {
-        ManualAddressView(showModal: .constant(false), addressFieldStreet: .constant("Apple"), addressFieldPostalCode: .constant("Apple") )
-    }
-}
+//struct ManualAddressView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ManualAddressView(showModal: .constant(), addressFieldStreet: .constant("Apple"), addressFieldPostalCode: .constant("Apple") )
+//    }
+//}
