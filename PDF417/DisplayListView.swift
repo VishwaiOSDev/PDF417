@@ -24,7 +24,7 @@ struct DisplayListView: View {
     }
     
     @State var activeSheet: ActiveSheet?
-        
+    
     let pasteBoard = UIPasteboard.general
     
     @State private var textStreet : String = ""
@@ -51,7 +51,7 @@ struct DisplayListView: View {
         }
     }
     
-    var filterDisplayLists : [DisplayList]{
+    var filterDisplayLists : [DisplayList] {
         switch filter{
         case .box:
             return displayLists.people.filter { $0.isContacted }
@@ -70,6 +70,8 @@ struct DisplayListView: View {
             VStack{
                 
                 List{
+                    
+                    
                     ForEach(filterDisplayLists){ displaylist in
                         
                         VStack(alignment : .leading){
@@ -83,10 +85,11 @@ struct DisplayListView: View {
                             
                         }
                         
+                        
                     }
                     .onDelete(perform : delete)
                     .listStyle(PlainListStyle())
-                    
+  
                 }
                 .navigationBarTitle(title)
                 .navigationBarItems(trailing:
@@ -119,13 +122,7 @@ struct DisplayListView: View {
                         ManualAddressView(showModal: $activeSheet, addressFieldStreet : $textStreet, addressFieldPostalCode : $textPostalCode)
                     }
                 }
-                //                .sheet(isPresented : $showSheet) {
-                //                    if self.activeSheet == .first{
-                //                        CodeScannerView(codeTypes: [.pdf417], simulatedData: "Vishwa|Appleismass|GoogleisWorst|Apple" , completion: self.handleScan)
-                //                    }
-                //                    if self.activeSheet == .second{
-                //                        ManualAddressView(showModal: $showSheet, addressFieldStreet : $textStreet, addressFieldPostalCode : $textPostalCode)                    }
-                //                }
+                
                 
                 //MARK: - Mail Toggle Button
                 Toggle(isOn: $isToggle){
@@ -144,6 +141,7 @@ struct DisplayListView: View {
                 }
                 
             }
+            
         }
         
     }
