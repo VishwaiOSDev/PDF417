@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ManualAddressView: View {
     
+    @FetchRequest(entity: Item.entity(), sortDescriptors: []) var items : FetchedResults<Item>
+    @Environment(\.managedObjectContext) var moc
+    
     @EnvironmentObject var displayLists : DisplayLists
     
     @Binding var showModal : ActiveSheet?
@@ -16,13 +19,17 @@ struct ManualAddressView: View {
     @Binding var addressFieldStreet : String
     @Binding var addressFieldPostalCode : String
     
+    @State private var isShowError : Bool = false
+    
+    
+    
     var body: some View {
         
         NavigationView{
             
             VStack{
                 
-                Text("Add Fields Manually")
+                Text(isShowError ? "Fields are Empty..." : "Add Fields Manually")
                     .font(.title)
                     .bold()
                     .padding(.all)
@@ -50,17 +57,16 @@ struct ManualAddressView: View {
                             backgroundColor: Color.blue) {
                     
                     if addressFieldStreet.isEmpty || addressFieldPostalCode.isEmpty {
-                        print("Fields are Empty you cannot add items")
+                        self.isShowError = true
                     }
                     
                     else{
                         
-                        let data = DisplayList()
+                        let item = Item(context: self.moc)
+                        item.street = "\(addressFieldStreet)"
+                        item.postalCode = "\(addressFieldPostalCode)"
                         
-                        data.street = addressFieldStreet
-                        data.postalCode = addressFieldPostalCode
-                        
-                        self.displayLists.people.append(data)
+                        try? self.moc.save()
                         
                         self.showModal = nil
                         
@@ -74,8 +80,9 @@ struct ManualAddressView: View {
     }
 }
 
-//struct ManualAddressView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ManualAddressView(showModal: .constant(), addressFieldStreet: .constant("Apple"), addressFieldPostalCode: .constant("Apple") )
-//    }
-//}
+struct ManualAddressView_Previews: PreviewProvider {
+    static var previews: some View {
+        ManualAddressView(showModal: .constant(ActiveSheet.second), addressFieldStreet: .constant("Apple"), addressFieldPostalCode: .constant("Apple") )
+            .preferredColorScheme(.dark)
+    }
+}

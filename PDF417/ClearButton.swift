@@ -26,6 +26,7 @@ struct ClearButton: ViewModifier
                 {
                     Image(systemName: "delete.left")
                         .foregroundColor(Color(UIColor.opaqueSeparator))
+                        .font(.system(size: 22))
                 }
                 .padding(.trailing, 24)
             }

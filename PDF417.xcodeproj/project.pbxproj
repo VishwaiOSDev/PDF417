@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		883EA220256911DA005816CF /* ManualAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883EA21F256911DA005816CF /* ManualAddressView.swift */; };
+		886354DD256A5B8B00B78719 /* Presistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886354DC256A5B8B00B78719 /* Presistence.swift */; };
+		886DDFD9256B9E9D005B2731 /* PDF417.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 886DDFD7256B9E9D005B2731 /* PDF417.xcdatamodeld */; };
 		889F37A02567CE2C0068F86C /* LargeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889F379F2567CE2C0068F86C /* LargeButton.swift */; };
 		88B323C125693FE400C7AF23 /* ClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B323C025693FE400C7AF23 /* ClearButton.swift */; };
 		88D8E9FF2563DF8C009F93CD /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 88D8E9FE2563DF8C009F93CD /* CodeScanner */; };
@@ -21,6 +23,8 @@
 
 /* Begin PBXFileReference section */
 		883EA21F256911DA005816CF /* ManualAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualAddressView.swift; sourceTree = "<group>"; };
+		886354DC256A5B8B00B78719 /* Presistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presistence.swift; sourceTree = "<group>"; };
+		886DDFD8256B9E9D005B2731 /* PDF417.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PDF417.xcdatamodel; sourceTree = "<group>"; };
 		889F379F2567CE2C0068F86C /* LargeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButton.swift; sourceTree = "<group>"; };
 		88B323C025693FE400C7AF23 /* ClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButton.swift; sourceTree = "<group>"; };
 		88FC65FB2562C2BC00204FF2 /* PDF417.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDF417.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,9 +75,11 @@
 				883EA21F256911DA005816CF /* ManualAddressView.swift */,
 				88B323C025693FE400C7AF23 /* ClearButton.swift */,
 				889F379F2567CE2C0068F86C /* LargeButton.swift */,
+				886354DC256A5B8B00B78719 /* Presistence.swift */,
 				88FC66022562C2C000204FF2 /* Assets.xcassets */,
 				88FC66072562C2C000204FF2 /* Info.plist */,
 				88FC66042562C2C000204FF2 /* Preview Content */,
+				886DDFD7256B9E9D005B2731 /* PDF417.xcdatamodeld */,
 			);
 			path = PDF417;
 			sourceTree = "<group>";
@@ -166,7 +172,9 @@
 				88FC65FF2562C2BC00204FF2 /* PDF417App.swift in Sources */,
 				88B323C125693FE400C7AF23 /* ClearButton.swift in Sources */,
 				883EA220256911DA005816CF /* ManualAddressView.swift in Sources */,
+				886354DD256A5B8B00B78719 /* Presistence.swift in Sources */,
 				88FC66122562D36E00204FF2 /* DisplayList.swift in Sources */,
+				886DDFD9256B9E9D005B2731 /* PDF417.xcdatamodeld in Sources */,
 				88FC660F2562D17200204FF2 /* DisplayListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +383,19 @@
 			productName = CodeScanner;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		886DDFD7256B9E9D005B2731 /* PDF417.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				886DDFD8256B9E9D005B2731 /* PDF417.xcdatamodel */,
+			);
+			currentVersion = 886DDFD8256B9E9D005B2731 /* PDF417.xcdatamodel */;
+			path = PDF417.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 88FC65F32562C2BC00204FF2 /* Project object */;
 }
