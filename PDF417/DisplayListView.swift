@@ -40,9 +40,7 @@ struct DisplayListView: View {
     @State var copyToClipBoard : [String] = []
     
     @State private var showingAlert = false
-    
-    @EnvironmentObject var displayLists : DisplayLists
-    
+        
     @State private var isShowingManualAddress = false
     
     @State var copyVariable : String = " "
@@ -57,15 +55,6 @@ struct DisplayListView: View {
             return "Items"
         }
     }
-    
-    var filterDisplayLists : [DisplayList] {
-        switch filter{
-        case .box:
-            return displayLists.people.filter { $0.isContacted }
-            
-        }
-    }
-    
     
     var body: some View {
         NavigationView{
@@ -221,9 +210,9 @@ struct DisplayListView: View {
 
 
 
-struct DisplayListView_Previews: PreviewProvider {
-    static var previews: some View {
-        DisplayListView(filter: .box).environmentObject(DisplayLists())
-            .preferredColorScheme(.dark)
-    }
-}
+//struct DisplayListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DisplayListView(filter: .box).environmentObject()
+//            .preferredColorScheme(.dark)
+//    }
+//}

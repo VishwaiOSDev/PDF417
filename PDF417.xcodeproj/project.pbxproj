@@ -18,7 +18,6 @@
 		88FC66032562C2C000204FF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88FC66022562C2C000204FF2 /* Assets.xcassets */; };
 		88FC66062562C2C000204FF2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88FC66052562C2C000204FF2 /* Preview Assets.xcassets */; };
 		88FC660F2562D17200204FF2 /* DisplayListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FC660E2562D17200204FF2 /* DisplayListView.swift */; };
-		88FC66122562D36E00204FF2 /* DisplayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FC66112562D36E00204FF2 /* DisplayList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +33,6 @@
 		88FC66052562C2C000204FF2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		88FC66072562C2C000204FF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88FC660E2562D17200204FF2 /* DisplayListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayListView.swift; sourceTree = "<group>"; };
-		88FC66112562D36E00204FF2 /* DisplayList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +68,6 @@
 			children = (
 				88FC65FE2562C2BC00204FF2 /* PDF417App.swift */,
 				88FC66002562C2BC00204FF2 /* ContentView.swift */,
-				88FC66112562D36E00204FF2 /* DisplayList.swift */,
 				88FC660E2562D17200204FF2 /* DisplayListView.swift */,
 				883EA21F256911DA005816CF /* ManualAddressView.swift */,
 				88B323C025693FE400C7AF23 /* ClearButton.swift */,
@@ -173,7 +170,6 @@
 				88B323C125693FE400C7AF23 /* ClearButton.swift in Sources */,
 				883EA220256911DA005816CF /* ManualAddressView.swift in Sources */,
 				886354DD256A5B8B00B78719 /* Presistence.swift in Sources */,
-				88FC66122562D36E00204FF2 /* DisplayList.swift in Sources */,
 				886DDFD9256B9E9D005B2731 /* PDF417.xcdatamodeld in Sources */,
 				88FC660F2562D17200204FF2 /* DisplayListView.swift in Sources */,
 			);

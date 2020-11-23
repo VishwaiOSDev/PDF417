@@ -9,11 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
-    var displayList = DisplayLists()
     
     var body: some View {
         DisplayListView(filter: .box)
-            .environmentObject(displayList)
     }
 }
 

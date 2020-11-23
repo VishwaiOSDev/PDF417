@@ -12,17 +12,13 @@ struct ManualAddressView: View {
     @FetchRequest(entity: Item.entity(), sortDescriptors: []) var items : FetchedResults<Item>
     @Environment(\.managedObjectContext) var moc
     
-    @EnvironmentObject var displayLists : DisplayLists
-    
     @Binding var showModal : ActiveSheet?
     
     @Binding var addressFieldStreet : String
     @Binding var addressFieldPostalCode : String
     
     @State private var isShowError : Bool = false
-    
-    
-    
+
     var body: some View {
         
         NavigationView{
