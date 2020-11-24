@@ -44,6 +44,7 @@ struct DisplayListView: View {
     @State var copyToClipBoard : [String] = []
     
     @State private var showingAlert = false
+    
     @State private var deleteAlert = false
 
     @State private var isShowingManualAddress = false
@@ -101,26 +102,28 @@ struct DisplayListView: View {
                 .navigationBarTitle(title)
                 .navigationBarItems(leading:
                                         HStack {
-                                            //MARK: - Copy Button
+                                            //MARK: - Copy and Delete All Button
                                             
                                             Button(action : {
-                                                self.showingAlert = true
-
+                                                self.deleteAlert = true
                                             }){
                                                 Image(systemName: "xmark.bin")
-                                            }.alert(isPresented:$showingAlert) {
+                                            }.alert(isPresented:$deleteAlert) {
                                                 Alert(title: Text("Are you sure you want to delete this?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
                                                         deleteAllItems()
                                                 }, secondaryButton: .cancel())
                                             }
+                                            
                                             Button(action: {
-                                                copyClips()
                                                 self.showingAlert = true
                                             }) {
                                                 Text("Copy")
                                                 Image(systemName: "checkmark.circle")
                                             }.alert(isPresented:$showingAlert) {
-                                                Alert(title: Text("Copied"), message: Text("List of items has been copied successfully."), dismissButton: .default(Text("Ok")))
+                                                Alert(title: Text("Copied"), message: Text("List of items has been copied successfully."), dismissButton: .default(Text("Ok"))
+                                                        {
+                                                            copyClips()
+                                                        })
                                             }
                                             
                                         }, trailing:
