@@ -47,6 +47,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		885F8DB3256C166100E37FC9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				88FC66002562C2BC00204FF2 /* ContentView.swift */,
+				88FC660E2562D17200204FF2 /* DisplayListView.swift */,
+				883EA21F256911DA005816CF /* ManualAddressView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		885F8DB4256C167300E37FC9 /* Custom View */ = {
+			isa = PBXGroup;
+			children = (
+				88B323C025693FE400C7AF23 /* ClearButton.swift */,
+				889F379F2567CE2C0068F86C /* LargeButton.swift */,
+			);
+			path = "Custom View";
+			sourceTree = "<group>";
+		};
 		88FC65F22562C2BC00204FF2 = {
 			isa = PBXGroup;
 			children = (
@@ -67,15 +86,12 @@
 			isa = PBXGroup;
 			children = (
 				88FC65FE2562C2BC00204FF2 /* PDF417App.swift */,
-				88FC66002562C2BC00204FF2 /* ContentView.swift */,
-				88FC660E2562D17200204FF2 /* DisplayListView.swift */,
-				883EA21F256911DA005816CF /* ManualAddressView.swift */,
-				88B323C025693FE400C7AF23 /* ClearButton.swift */,
-				889F379F2567CE2C0068F86C /* LargeButton.swift */,
-				886354DC256A5B8B00B78719 /* Presistence.swift */,
+				885F8DB4256C167300E37FC9 /* Custom View */,
+				885F8DB3256C166100E37FC9 /* View */,
 				88FC66022562C2C000204FF2 /* Assets.xcassets */,
 				88FC66072562C2C000204FF2 /* Info.plist */,
 				88FC66042562C2C000204FF2 /* Preview Content */,
+				886354DC256A5B8B00B78719 /* Presistence.swift */,
 				886DDFD7256B9E9D005B2731 /* PDF417.xcdatamodeld */,
 			);
 			path = PDF417;

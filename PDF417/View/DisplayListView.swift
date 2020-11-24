@@ -22,7 +22,11 @@ struct DisplayListView: View {
     
     @FetchRequest(entity: Item.entity(), sortDescriptors: []) var items : FetchedResults<Item>
     @Environment(\.managedObjectContext) var moc
+    
+    @State private var refreshingID = UUID()
 
+    let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")
+    
     enum FilterType {
         case box
     }
@@ -40,7 +44,8 @@ struct DisplayListView: View {
     @State var copyToClipBoard : [String] = []
     
     @State private var showingAlert = false
-        
+    @State private var deleteAlert = false
+
     @State private var isShowingManualAddress = false
     
     @State var copyVariable : String = " "
@@ -74,25 +79,40 @@ struct DisplayListView: View {
                                 .padding(.trailing, 12)
                             
                             VStack(alignment : .leading){
-                                Text("\(item.street!)")
+                                
+                                Text(item.street != nil ? "\(item.street!)" : "Items Deleted")
                                     .font(.headline)
                                 
-                                Text("\(item.postalCode!)")
+                                
+                                Text(item.postalCode != nil ? "\(item.postalCode!)" : "Items Deleted")
                                     .font(.subheadline)
+                                
                             }
                             
                         }
                         
                     }.onDelete(perform : performDelete)
                     .listStyle(PlainListStyle())
+                    .id(refreshingID)
                     
-                   
+                    
                     
                 }
                 .navigationBarTitle(title)
                 .navigationBarItems(leading:
                                         HStack {
                                             //MARK: - Copy Button
+                                            
+                                            Button(action : {
+                                                self.showingAlert = true
+
+                                            }){
+                                                Image(systemName: "xmark.bin")
+                                            }.alert(isPresented:$showingAlert) {
+                                                Alert(title: Text("Are you sure you want to delete this?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
+                                                        deleteAllItems()
+                                                }, secondaryButton: .cancel())
+                                            }
                                             Button(action: {
                                                 copyClips()
                                                 self.showingAlert = true
@@ -102,7 +122,7 @@ struct DisplayListView: View {
                                             }.alert(isPresented:$showingAlert) {
                                                 Alert(title: Text("Copied"), message: Text("List of items has been copied successfully."), dismissButton: .default(Text("Ok")))
                                             }
-                                           
+                                            
                                         }, trailing:
                                             HStack {
                                                 
@@ -115,7 +135,7 @@ struct DisplayListView: View {
                                                 }
                                                 
                                             }
-                                            
+                                    
                 )
                 .sheet(item : $activeSheet){ item in
                     switch item {
@@ -125,7 +145,7 @@ struct DisplayListView: View {
                     case .second:
                         ManualAddressView(showModal: $activeSheet, addressFieldStreet : $textStreet, addressFieldPostalCode : $textPostalCode)
                             .environment(\.managedObjectContext, self.moc)
-
+                        
                     }
                     
                     
@@ -133,6 +153,8 @@ struct DisplayListView: View {
                 
                 
                 //MARK: - Mail Toggle Button
+                
+                
                 Toggle(isOn: $isToggle){
                     Image(systemName: "mail.stack.fill")
                         .foregroundColor(.blue)
@@ -165,7 +187,6 @@ struct DisplayListView: View {
             copyToClipBoard.append(elements)
         }
         
-        print(copyToClipBoard)
         pasteBoard.strings = copyToClipBoard
     }
     
@@ -195,7 +216,7 @@ struct DisplayListView: View {
         
     }
     
-    //MARK: - Delete Function
+    //MARK: - Delete Functions
     func performDelete(at offsets: IndexSet){
         for index in offsets{
             let item = items[index]
@@ -205,14 +226,33 @@ struct DisplayListView: View {
         }
     }
     
+    func deleteAllItems(){
+        
+        copyToClipBoard.removeAll()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: self.deleteFetch)
+        
+        do{
+            try moc.save()
+            try moc.execute(deleteRequest)
+            moc.reset()
+            self.refreshingID = UUID()
+        }
+        catch{
+            print("Can't Delete items Sorry...")
+        }
+        
+    }
+
+    
 }
 
 
 
 
-//struct DisplayListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DisplayListView(filter: .box).environmentObject()
-//            .preferredColorScheme(.dark)
-//    }
-//}
+
+struct DisplayListView_Previews: PreviewProvider {
+    static var previews: some View {
+        DisplayListView(filter: .box)
+            .preferredColorScheme(.dark)
+    }
+}
